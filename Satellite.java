@@ -1,11 +1,13 @@
 /*********************
- * Adam Pape
- * 2/3/13
- * Computer Science III
- * Satellite class
- *********************/
+* Adam Pape
+* 2/3/13
+* Computer Science III
+* Satellite class
+*********************/
 
-//This class creates and tracks the orbit of a satellite
+/**
+ * This class creates and tracks the orbit of a satellite. 
+ */
 public class Satellite
 {
       //Variables
@@ -34,7 +36,13 @@ public class Satellite
         // Radius of the Earth
         final int earthRadius = 12756300;
 
-        //Constructor accepts the satellite's initial x and y positions and velocities
+        /**
+         * This constructor sets the satellite's starting position and velocity
+         * @param x the satellite's position on the x-axis
+         * @param y the satellite's position on the y-axis 
+         * @param vx the satellite's velocity along the x-axis 
+         * @param vy the satellite's vertical velocity along the y-axis
+         */
         public Satellite(double x, double y, double vx, double vy)
         {
 
@@ -56,14 +64,18 @@ public class Satellite
 
         }
 
-        //Setter for the X position
+        /**
+         * @param x the satellite's location along the x-axis
+         */
         public void setX(double x)
         {
 
                 this.x = x;
         }
 
-        //Setter for the Y position
+        /**
+         * @param y the satellite's location along the y-axis
+         */
         public void setY(double y)
         {
 
@@ -71,7 +83,10 @@ public class Satellite
 
         }
 
-        //Setter for the X velocity
+
+        /**
+         * @param vx the satellite's velocity along the x-axis
+         */
         public void setVX(double vx)
         {
 
@@ -80,7 +95,9 @@ public class Satellite
         }
 
 
-        //Setter for the Y velocity
+        /**
+         * @param vy the satellite's velocity along the y-axis
+         */
         public void setVY(double vy)
         {
 
@@ -88,7 +105,9 @@ public class Satellite
 
         }
 
-        //Getter for the X position
+        /**
+         * @return the current location along the x-axis
+         */
         public double getX()
         {
 
@@ -96,7 +115,9 @@ public class Satellite
 
         }
 
-        //Getter for the Y position
+        /**
+         * @return the current location along the y-axis
+         */
         public double getY()
         {
 
@@ -104,7 +125,9 @@ public class Satellite
 
         }
 
-        //Getter for the X velocity
+        /**
+         * @return the current velocity along the x-axis
+         */
         public double getVX()
         {
 
@@ -112,7 +135,9 @@ public class Satellite
 
         }
 
-        //Getter for the Y velocity
+        /**
+         * @return the current velocity along the y-axis
+         */
         public double getVY()
         {
 
@@ -120,7 +145,10 @@ public class Satellite
 
         }
 
-        //Calculates the X and Y positions and velocities after the specified number of seconds has elapsed
+        /**
+         * Calculates the X and Y positions and velocities after the specified number of seconds has elapsed
+         * @param t the time in seconds between data updates
+         */
         public void secondsElapsed(int t)
         {
 
@@ -150,9 +178,12 @@ public class Satellite
                         vy = 0;
 
                 }
-
         }
 
+        /**
+         * Calculates the x-axis acceleration
+         * @return the x-axis acceleration
+         */
         //Calculates the X axis acceleration
         public double getAX()
         {
@@ -165,7 +196,10 @@ public class Satellite
 
         }
 
-        //Calculates the Y axis acceleration
+        /**
+         * Calculates the Y axis acceleration
+         * @return the y-axis acceleration
+         */
         public double getAY()
         {
 
@@ -177,7 +211,10 @@ public class Satellite
 
         }
 
-        //Calculates the distance of the satellite from the center of the earth
+        /**
+         * Calculates the distance of the satellite from the center of the earth in meters
+         * @return the distance of the satellite from the center of the earth in meters
+         */
         public double getD()
         {
 
@@ -185,7 +222,10 @@ public class Satellite
 
         }
 
-        //Calculates the altitude of the satellite
+        /**
+         * Calculates the altitude of the satellite
+         * @return the altitude of the satellite in meters
+         */
         public double getAltitude()
         {
 
@@ -193,7 +233,11 @@ public class Satellite
 
         }
 
-        //Determines if the satellite has crashed into the Earth
+        /**
+         * Determines if the satellite has crashed into the Earth
+         * @return returns <code>true</code> is the satellite has crashed into the earth and <code>false</code> if
+         * it has not.
+         */
         public boolean hasCrashed()
         {
 
