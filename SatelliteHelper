@@ -12,6 +12,10 @@ public class SatelliteHelper {
 	//the user will also supply the total time for which to run the simulation
 	public void orbitEarthsEquator(int simulationTime, double x, double y, double vx, double vy){
 
+		if (simulationTime <= 0){
+			throw new IllegalArgumentException("Enter a simulation time (in seconds) greater than 0.");
+		}
+		
 		int time = 1; //this is t (time in seconds)
 		Satellite satellite = new Satellite(x, y, vx, vy);
 
@@ -27,6 +31,12 @@ public class SatelliteHelper {
 				return;
 			}
 
+			if (i == totalOrbitTime) {
+				//satellite has completed the orbit around the Equator
+				System.err.println("Equator orbit succesfully completed.");
+				return;
+			}
+		
 			if (i == 60){
 				printOutputValue(satellite);
 			}
