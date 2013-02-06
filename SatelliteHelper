@@ -1,0 +1,61 @@
+package org.Montco.DataStructures.ChapterTwo.Midtier;
+
+/**
+ * 
+ * @author Fred
+ *
+ */
+
+public class SatelliteHelper {
+  
+	//this method will be called by the ui with these initial values
+	//the user will also supply the total time for which to run the simulation
+	public void orbitEarthsEquator(int simulationTime, double x, double y, double vx, double vy){
+
+		int time = 1; //this is t (time in seconds)
+		Satellite satellite = new Satellite(x, y, vx, vy);
+
+		for (int i = 1; i <= simulationTime; i++){
+			simulateFlight(satellite, time);
+
+			if (satellite.hasCrashed()){
+				//reset velocity
+				satellite.setVX(0);
+				satellite.setVY(0);
+
+				System.err.println("Sorry the satellite has crashed!");
+				return;
+			}
+
+			if (i == 60){
+				printOutputValue(satellite);
+			}
+
+			time ++;
+		}	
+	}
+
+	//change instance values as time increases
+	private void simulateFlight(Satellite satellite, int time){
+
+		double newXValue = satellite.getX() + satellite.getVX() * time;
+		double newYValue = satellite.getY() + satellite.getVY() * time;
+		double newVXValue = satellite.getVX() + satellite.getAX() * time;
+		double newVYValue = satellite.getVY() + satellite.getAY() * time;
+
+		satellite.setX(newXValue);
+		satellite.setY(newYValue);
+		satellite.setVX(newVXValue);
+		satellite.setVY(newVYValue);
+
+	}
+
+	//print x, y, vx, vy values 
+	private void printOutputValue(Satellite satellite){
+
+		System.err.println("The value of x is : " + satellite.getX());
+		System.err.println("Current value of y is : " + satellite.getY());
+		System.err.println("The value of vx is : " + satellite.getVX());
+		System.err.println("Current value of vy is : " + satellite.getVY());
+	}
+}		
