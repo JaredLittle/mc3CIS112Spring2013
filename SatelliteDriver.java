@@ -1,8 +1,7 @@
-************************
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -20,6 +19,7 @@ public class SatelliteDriver implements ActionListener
 	JTextField valueVY;
 	JTextField totalOrbitTime;
 	JTextField data;
+	JTextArea  textArea;
 		
 	SatelliteDriver()		
 	{	
@@ -73,11 +73,13 @@ public class SatelliteDriver implements ActionListener
 		// Sets up a JPanel to output the data from the calculations.
 		// Probably should be a TextArea instead of a textField.
 	
-		JPanel panel2 = new JPanel();
-		panel2.setBorder(BorderFactory.createEmptyBorder(8,8,8,8)); 	
-		panel2.add(new JLabel("Data"));
-		panel2.add(data);
-		j.add(panel2, BorderLayout.CENTER);
+		textArea = new JTextArea(20, 32);
+		textArea.setEditable(false);
+		
+		JPanel textBox = new JPanel(); 	
+		textBox.add(new JLabel("Data"));
+		textBox.add(textArea);
+		j.add(textBox, BorderLayout.CENTER);
 		
 		// Sets up a JPanel and adds the buttons to perform the calculations.
 		
@@ -109,10 +111,16 @@ public class SatelliteDriver implements ActionListener
 	{		
 		if(e.getActionCommand().equals("Calculate Orbit"))
 		{
+			//Sets the text in the Text Area.
+			textArea.setText("Something was Output here!");
+			
+			//Adds to the text without deleting it.
+			textArea.append("\nThis was added.");
 		}
 		
 		if(e.getActionCommand().equals("Stop Orbit"))
 		{	
+			
 		}
 	}
 	
