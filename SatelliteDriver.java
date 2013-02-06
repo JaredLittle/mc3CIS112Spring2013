@@ -9,12 +9,14 @@ import java.text.NumberFormat;
  * @author Jared Little
  */
 public class SatelliteDriver implements ActionListener {
-  
+	
 	JTextField valueX;
 	JTextField valueY;
 	JTextField valueVX;
 	JTextField valueVY;
 	//JTextField totalOrbitTime;
+	
+
 	
 	DataPanel dataPanel = new DataPanel();
 
@@ -102,6 +104,16 @@ public class SatelliteDriver implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Calculate Orbit")) {
 		
+		String x1 = valueX.getText();
+		double x2 = Double.parseDouble(x1);
+		String y1 = valueY.getText();
+		double y2 = Double.parseDouble(y1);
+		String vx1 = valueVX.getText();
+		double vx2 = Double.parseDouble(vx1);
+		String vy1 = valueVY.getText();
+		double vy2 = Double.parseDouble(vy1);
+		
+		Satellite Sat1 = new Satellite(x2, y2, vx2, vy2);
 		dataPanel.setData();	
 			
 		}
