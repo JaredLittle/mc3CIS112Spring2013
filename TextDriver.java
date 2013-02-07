@@ -19,15 +19,15 @@ public class TextDriver
 		printWelcomeMessage();		
 
 		//Get User Values.  
-		System.out.print	("\n\nWhat is the starting position X? (in meters): ");
+		System.out.print ("\n\nWhat is the starting position X? (in meters): ");
 			s.setX(myScan.nextDouble());	
-		System.out.print	("What is the starting position Y? (in meters): ");
+		System.out.print ("What is the starting position Y? (in meters): ");
 			s.setY(myScan.nextDouble());	
-		System.out.print	("What is the starting velocity X? (in meters/sec): ");
+		System.out.print ("What is the starting velocity X? (in meters/sec): ");
 			s.setVX(myScan.nextDouble());	
-		System.out.print	("What is the starting velocity Y? (in meters/sec): ");
+		System.out.print ("What is the starting velocity Y? (in meters/sec): ");
 			s.setVY(myScan.nextDouble());	
-		System.out.print	("How many seconds should the simulation run? : ");		//Maybe should validate # of seconds given to be positive int
+		System.out.print ("How many seconds should the simulation run? : ");		//Maybe should validate # of seconds given to be positive int
 			secondsToRun = myScan.nextInt();	
 					
 		//Simulation Loop
@@ -57,10 +57,10 @@ public class TextDriver
 	//Methods For Outputting Info
 	static void printWelcomeMessage()
 	{
-		System.out.print		("\n*************************************************************************");		
-		System.out.print		("\nWelcome to the Satelite Class Experiment");
-		System.out.print		("\nThe Earth is located at origin 0,0 and has a radius of 12,756,300 meters");
-		System.out.print		("\n*************************************************************************");
+		System.out.print ("\n*************************************************************************");		
+		System.out.print ("\nWelcome to the Satelite Class Experiment");
+		System.out.print ("\nThe Earth is located at origin 0,0 and has a radius of 12,756,300 meters");
+		System.out.print ("\n*************************************************************************");
 	}
 
 	static void printLocationOutput(Satellite mySat, int secondsPassed)
@@ -74,19 +74,19 @@ public class TextDriver
 	static void printFinalOutput(Satellite mySat, int secondsPassed)
 	{
 			//Final Output		
-		System.out.print	("\n*************************************************************************");
-		System.out.printf  ("\nFinished Simulated Time of: " + secondsPassed + " Seconds");
+		System.out.print ("\n*************************************************************************");
+		System.out.printf ("\nFinished Simulated Time of: " + secondsPassed + " Seconds");
 		System.out.printf ("\nFinal Satelite Position (x, y): (%.2f, %.2f)", mySat.getX(), mySat.getY());
 		System.out.printf ("\nFinal Satelite Velocity (x, y): (%.2f, %.2f)", mySat.getVX(), mySat.getVY());
 	}
 	
 	static void printCrashMessage(Satellite mySat, int secondsPassed)
 	{
-		System.out.print	("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.print ("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.print ("\nSatelite Crashed!");
-		System.out.print  ("\nCrash Time: " + secondsPassed + " Seconds");
+		System.out.print ("\nCrash Time: " + secondsPassed + " Seconds");
 		System.out.printf ("\nCrash Position (x, y): (%.2f, %.2f)", mySat.getX(), mySat.getY());
 		System.out.printf ("\nCrash Velocity (x, y): (%.2f, %.2f)", mySat.getVX(), mySat.getVY());
-		System.out.print	("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.print ("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 }
