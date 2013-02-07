@@ -6,28 +6,28 @@ import java.util.*;
 
 public class TextDriver
 {
-  public static void main (String[] args) 
+	public static void main (String[] args) 
 	{
 		Satellite s = new Satellite();				// satellite object
 		Scanner myScan = new Scanner(System.in); //get text input
 		
 		int secondsToRun;
 		final int OUTPUT_FREQUENCY = 60; 	//Output info every 60 simulated seconds in simulation loop
-		boolean crashed = false;
+		boolean crashed = false;				//a flag to check if satellite ever has a crash
 		
 		//Output Welcome Message
 		printWelcomeMessage();		
 
-		//Get User Values.  Need to Validate Input.
-		System.out.print	(	"\n\nWhat is the starting position X? (in meters): ");
+		//Get User Values.  
+		System.out.print	("\n\nWhat is the starting position X? (in meters): ");
 			s.setX(myScan.nextDouble());	
-		System.out.print	(	"What is the starting position Y? (in meters): ");
+		System.out.print	("What is the starting position Y? (in meters): ");
 			s.setY(myScan.nextDouble());	
-		System.out.print	(	"What is the starting velocity X? (in meters/sec): ");
+		System.out.print	("What is the starting velocity X? (in meters/sec): ");
 			s.setVX(myScan.nextDouble());	
-		System.out.print	(	"What is the starting velocity Y? (in meters/sec): ");
+		System.out.print	("What is the starting velocity Y? (in meters/sec): ");
 			s.setVY(myScan.nextDouble());	
-		System.out.print	(	"How many seconds should the simulation run? : ");
+		System.out.print	("How many seconds should the simulation run? : ");		//Maybe should validate # of seconds given to be positive int
 			secondsToRun = myScan.nextInt();	
 					
 		//Simulation Loop
@@ -67,8 +67,8 @@ public class TextDriver
 	{
 		System.out.print ("\n ---------------------------------------");
 		System.out.print ("\nElapsed Seconds: " + secondsPassed);
-		System.out.printf ("\nCurrent Satelite Position (x, y): (%.2f, %.2f )", mySat.getX(), mySat.getY());
-		System.out.printf ("\nCurrent Satelite Velocity (x, y): (%.2f, %.2f )", mySat.getVX(), mySat.getVY());
+		System.out.printf ("\nCurrent Satelite Position (x, y): (%.2f, %.2f)", mySat.getX(), mySat.getY());
+		System.out.printf ("\nCurrent Satelite Velocity (x, y): (%.2f, %.2f)", mySat.getVX(), mySat.getVY());
 	}
 	
 	static void printFinalOutput(Satellite mySat, int secondsPassed)
@@ -76,8 +76,8 @@ public class TextDriver
 			//Final Output		
 		System.out.print	("\n*************************************************************************");
 		System.out.printf  ("\nFinished Simulated Time of: " + secondsPassed + " Seconds");
-		System.out.printf ("\nFinal Satelite Position (x, y): (%.2f, %.2f )", mySat.getX(), mySat.getY());
-		System.out.printf ("\nFinal Satelite Velocity (x, y): (%.2f, %.2f )", mySat.getVX(), mySat.getVY());
+		System.out.printf ("\nFinal Satelite Position (x, y): (%.2f, %.2f)", mySat.getX(), mySat.getY());
+		System.out.printf ("\nFinal Satelite Velocity (x, y): (%.2f, %.2f)", mySat.getVX(), mySat.getVY());
 	}
 	
 	static void printCrashMessage(Satellite mySat, int secondsPassed)
@@ -85,8 +85,8 @@ public class TextDriver
 		System.out.print	("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		System.out.print ("\nSatelite Crashed!");
 		System.out.print  ("\nCrash Time: " + secondsPassed + " Seconds");
-		System.out.printf ("\nCrash Position (x, y): (%.2f, %.2f )", mySat.getX(), mySat.getY());
-		System.out.printf ("\nCrash Velocity (x, y): (%.2f, %.2f )", mySat.getVX(), mySat.getVY());
+		System.out.printf ("\nCrash Position (x, y): (%.2f, %.2f)", mySat.getX(), mySat.getY());
+		System.out.printf ("\nCrash Velocity (x, y): (%.2f, %.2f)", mySat.getVX(), mySat.getVY());
 		System.out.print	("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
 }
