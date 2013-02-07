@@ -10,7 +10,7 @@ public class SatelliteHelper {
   
 	//this method will be called by the ui with these initial values
 	//the user will also supply the total time for which to run the simulation
-	public void orbitEarthsEquator(int simulationTime, double x, double y, double vx, double vy){
+	public String orbitEarthsEquator(int simulationTime, double x, double y, double vx, double vy){
 
 	if (simulationTime <= 0){
 			throw new IllegalArgumentException("Enter a simulation time (in seconds) greater than 0.");
