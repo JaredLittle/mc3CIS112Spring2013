@@ -12,11 +12,13 @@ public class SatelliteHelper {
 	//the user will also supply the total time for which to run the simulation
 	public void orbitEarthsEquator(int simulationTime, double x, double y, double vx, double vy){
 
-		if (simulationTime <= 0){
+	if (simulationTime <= 0){
 			throw new IllegalArgumentException("Enter a simulation time (in seconds) greater than 0.");
 		}
-		
-		int time = 1; //this is t (time in seconds)
+
+		int time = 1; //this is t (time in seconds)	
+		String output = "";
+		final int totalOrbitTime = 106 * 60; //total orbit time in seconds
 		Satellite satellite = new Satellite(x, y, vx, vy);
 
 		for (int i = 1; i <= simulationTime; i++){
@@ -27,22 +29,26 @@ public class SatelliteHelper {
 				satellite.setVX(0);
 				satellite.setVY(0);
 
-				System.err.println("Sorry the satellite has crashed!");
-				return;
+				output = "Sorry the satellite has crashed!";
+				System.err.println(output);
+				return output;
 			}
 
-			if (i == totalOrbitTime) {
-				//satellite has completed the orbit around the Equator
-				System.err.println("Equator orbit succesfully completed.");
-				return;
-			}
-		
 			if (i == 60){
 				printOutputValue(satellite);
 			}
+			
+			if (i == totalOrbitTime) {
+				//satellite has completed the orbit around the Equator
+				output = "Equator orbit succesfully completed.";
+				System.err.println(output);
+				return output;
+			}
 
 			time ++;
-		}	
+		}
+		
+		return output;
 	}
 
 	//change instance values as time increases
