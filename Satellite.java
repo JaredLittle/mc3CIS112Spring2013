@@ -35,7 +35,7 @@ public class Satellite
         final double EARTH_MASS = 5.97 * Math.pow(10,24);
 
         // Radius of the Earth
-        final int EARTH_RADIUS = 12756300;
+        final int EARTH_RADIUS = 6378137;
 
         /**
 * This constructor sets the satellite's starting position and velocity
