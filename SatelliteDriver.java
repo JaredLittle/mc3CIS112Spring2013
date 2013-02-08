@@ -1,30 +1,34 @@
 
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 /**
+ * This class initialized the GUI. In addition it monitors the buttons and performs appropriate actions 
+ * when one is pressed. This class also contains the main method.
  * @author Jared Little
  */
-
 public class SatelliteDriver implements ActionListener {
 
-	JTextField valueX;
-	JTextField valueY;
-	JTextField valueVX;
-	JTextField valueVY;
+	private JTextField valueX;
+	private JTextField valueY;
+	private JTextField valueVX;
+	private JTextField valueVY;
+	private JTextField time;
 	//JTextField totalOrbitTime;
-
-
 
 	DataPanel dataPanel = new DataPanel();
 
+	/**
+	 * Initializes all GUI components.
+	 */
 	SatelliteDriver() {
 		// Creates a new JFrame to hold the text fields and buttons.
 
 		JFrame frame = new JFrame("Satellite Simulation");
 		frame.setLayout(new BorderLayout());
-		frame.setSize(400, 700);
+		frame.setSize(420, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Creates text fields
@@ -38,7 +42,7 @@ public class SatelliteDriver implements ActionListener {
 		// Sets up a JPanel to hold the boxes for input variables
 
 		JPanel panel1 = new JPanel();
-		panel1.setLayout(new GridLayout(4, 2));
+		panel1.setLayout(new GridLayout(5, 2));
 		panel1.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
 		// Adds labels and text fields.
@@ -63,6 +67,11 @@ public class SatelliteDriver implements ActionListener {
 		valueVY.addActionListener(this);
 		frame.add(panel1, BorderLayout.NORTH);
 
+		time = new JTextField();
+		panel1.add(new JLabel("Time in Seconds"));
+		panel1.add(time);
+		frame.add(panel1, BorderLayout.NORTH);
+		
 		// Sets up a tabbed panel for the image and data
 
 		JTabbedPane tabs = new JTabbedPane();
@@ -97,8 +106,13 @@ public class SatelliteDriver implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	
+	
 	/**
-	 * A method to create actions for the buttons.
+	 * A method that receives an action event from a button.  When received the if-else chain picks the proper code to
+	 * run based on what button is pressed.  If Calculate Orbit is pressed this method will take the data
+	 * input by the user and pass it to the SatelliteHelper's class "orbitEquator". If Reset Values is pressed 
+	 * then all fields are cleared.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Calculate Orbit")) {
@@ -107,6 +121,7 @@ public class SatelliteDriver implements ActionListener {
 			String y1 = valueY.getText();
 			String vx1 = valueVX.getText();
 			String vy1 = valueVY.getText();
+			String t1 = time.getText();
 			String outputText = "";
 			String errorText = "";
 
@@ -114,6 +129,7 @@ public class SatelliteDriver implements ActionListener {
 			double y2 = 0;
 			double vx2 = 0;
 			double vy2 = 0;
+			double t2 = 0;
 
 			try {
 				x2 = Double.parseDouble(x1);
@@ -151,14 +167,25 @@ public class SatelliteDriver implements ActionListener {
 				throw new IllegalArgumentException("errorText");
 			}	
 
-			SatelliteHelper satelliteHelper = new SatelliteHelper();
+			try {
+				t2 = Double.parseDouble(t1);
+			} catch (NumberFormatException e1) {
+				errorText = "Please provide a value for t.";
+				System.err.println(errorText);
+				dataPanel.setData(errorText);
+				throw new IllegalArgumentException("errorText");
+			}
 			
-			outputText = satelliteHelper.orbitEquator(120, x2, y2, vx2, vy2);
-			dataPanel.setData(outputText);
+			
+			SatelliteHelper satelliteHelper = new SatelliteHelper();
+
+			outputText = satelliteHelper.orbitEquator(t2, x2, y2, vx2, vy2);
+			dataPanel.setData(satelliteHelper.getOutputStatus()+outputText);
 
 		}
 
 		if (e.getActionCommand().equals("Stop Orbit")) {
+			
 		}
 
 		if (e.getActionCommand().equals("Reset Values")) {
@@ -168,16 +195,13 @@ public class SatelliteDriver implements ActionListener {
 			valueY.setText("");
 			valueVX.setText("");
 			valueVY.setText("");
-
+			time.setText("");
 		}
-
 	}
 
 	/**
 	 * A main method to create a new GUI to run our program.
-	 * 
 	 */
-
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
