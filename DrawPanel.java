@@ -1,12 +1,16 @@
-
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * This class creates an extension of JPanel that can be drawn on via the paintComponent method.
+ * @author James Oakley
+ */
 public class DrawPanel  extends JPanel {
-  
+	
 	/**
-	 * (note that this method doesn't need to be called manually; it's automatically called when the DrawPanel 
-	 * object is instantiated)
+	 * Paints the DrawPanel as specified. Note that this method doesn't need to be called manually; 
+	 * it's automatically called when the DrawPanel object is instantiated
 	 */
 	public void paintComponent(Graphics g) {
 		//color and location of the circle representing earth
