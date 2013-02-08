@@ -14,6 +14,7 @@ public class TextDriver
 		int secondsToRun;
 		final int OUTPUT_FREQUENCY = 60; 	//Output info every 60 simulated seconds in simulation loop
 		boolean crashed = false;				//a flag to check if satellite ever has a crash
+		final String EARTH_RADIUS = "6,378,137";
 		
 		//Output Welcome Message
 		printWelcomeMessage();		
@@ -59,7 +60,7 @@ public class TextDriver
 	{
 		System.out.print ("\n*************************************************************************");		
 		System.out.print ("\nWelcome to the Satelite Class Experiment");
-		System.out.print ("\nThe Earth is located at origin 0,0 and has a radius of 12,756,300 meters");
+		System.out.print ("\nThe Earth is located at origin 0,0 and has a radius of " + EARTH_RADIUS + " meters");
 		System.out.print ("\n*************************************************************************");
 	}
 
