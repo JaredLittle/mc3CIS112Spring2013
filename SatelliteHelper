@@ -1,17 +1,25 @@
-package org.Montco.DataStructures.ChapterTwo.Midtier;
 
 /**
- * this method will be called by the ui with these initial values
- * the user will also supply the total time for which to run the simulation
+ * This class provides methods that calculate the satellite's progression
  * @author Fred
  * Javadoc added/edited by Christopher Steckhouse
  */
-
 public class SatelliteHelper {
-  
-	public String orbitEarthsEquator(int simulationTime, double x, double y, double vx, double vy){
-
-	if (simulationTime <= 0){
+	public String outputStatus;
+/**
+ * This method accepts all user input.  A satellite object is created with the x,y,vx,and vy input.
+ * The time the user enters determines how many times the loop operates.  Said loop calls on the 
+ * simulateFlight method to move the satellite every simulated second.
+ * @param simulationTime the time inputed by the user
+ * @param x the location along the x-axis 
+ * @param y the location along the y-axis
+ * @param vx the velocity along the x-axis
+ * @param vy the velocity along the y-axis
+ * @return
+ */
+	public String orbitEquator(double simulationTime, double x, double y, double vx, double vy){
+		
+		if (simulationTime <= 0){
 			throw new IllegalArgumentException("Enter a simulation time (in seconds) greater than 0.");
 		}
 
@@ -20,6 +28,7 @@ public class SatelliteHelper {
 		final int totalOrbitTime = 106 * 60; //total orbit time in seconds
 		Satellite satellite = new Satellite(x, y, vx, vy);
 
+		//this loops moves the satellite by calling the simulateFlight method the number of times
 		for (int i = 1; i <= simulationTime; i++){
 			simulateFlight(satellite, time);
 
@@ -33,8 +42,9 @@ public class SatelliteHelper {
 				return output;
 			}
 
-			if (i == 60){
-				printOutputValue(satellite);
+			if (i % 60 == 0){ /*if the time is divisible by 60 print current status. In other words: print status every 60
+				simulated seconds*/
+				printOutputValue(satellite, i);
 			}
 			
 			if (i == totalOrbitTime) {
@@ -50,14 +60,13 @@ public class SatelliteHelper {
 		return output;
 	}
 
-	//change instance values as time increases
 	/**
 	 * Changes instance values as time increases.
 	 * @Param satellite Target satellite
-	 * @Param time current time
+	 * @Param time time inputed by the user
 	 */
 	private void simulateFlight(Satellite satellite, int time){
-
+		
 		double newXValue = satellite.getX() + satellite.getVX() * time;
 		double newYValue = satellite.getY() + satellite.getVY() * time;
 		double newVXValue = satellite.getVX() + satellite.getAX() * time;
@@ -73,12 +82,33 @@ public class SatelliteHelper {
 	/**
 	 * Prints X, Y, VX, VY values.
 	 * @param satellite the target satellite.
-	 */
-	private void printOutputValue(Satellite satellite){
+	 */	public void printOutputValue(Satellite satellite, int time){
 
+		
+		//this code sends this string to DataPanel.setData. As of now it doens't work.  
+		//Specifically: it looks like .setData recieves the data but it doesn't appear on screen.
+		 outputStatus = ("Status at " + time + " seconds is:\n" +
+				"X Location: " + Double.toString(satellite.getX()) + 
+				"\n" + "Y Location: " + Double.toString(satellite.getY()) + "\n"
+				+ "X Velocity: " + Double.toString(satellite.getVX()) + "\n" 
+				+ "Y Velocity: " + Double.toString(satellite.getVY()) + "\n\n");
+		
+		//Essentially plan b.  Prints all data in the console.  Works great but not ideal.
+		System.out.println("Status at " + time + " seconds is:\n" +
+				"X Location: " + Double.toString(satellite.getX()) + 
+				"\n" + "Y Location: " + Double.toString(satellite.getY()) + "\n"
+				+ "X Velocity: " + Double.toString(satellite.getVX()) + "\n" 
+				+ "Y Velocity: " + Double.toString(satellite.getVY()) + "\n\n");
+		
+		/*//this bit of code outputs data and is now redundant - JO
 		System.err.println("The value of x is : " + satellite.getX());
 		System.err.println("Current value of y is : " + satellite.getY());
 		System.err.println("The value of vx is : " + satellite.getVX());
-		System.err.println("Current value of vy is : " + satellite.getVY());
+		System.err.println("Current value of vy is : " + satellite.getVY()); */
+	 }
+	
+	 	public String getOutputStatus(){	
+			return outputStatus;
 	}
+	
 }		
