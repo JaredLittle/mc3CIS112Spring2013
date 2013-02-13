@@ -11,7 +11,7 @@ import java.util.*;
 
 public class CompareArrayBagTimes 
 {
-  //Using Global Variables to Simplify Calls to Methods from Main Method and Test Driver Methods
+	//Using Global Variables to Simplify Calls to Methods from Main Method and Test Driver Methods
 
 	//Global Constants
 	//These represent exponents applied to number 10, such as 10^2 = 100
@@ -104,31 +104,37 @@ public class CompareArrayBagTimes
 	{
 		int testIndex = 0;
 		int expValue = exponentIndex + EXPONENT_START;
-		int powerOfTen = (int) Math.pow(10,expValue);
+      int powerOfTen = (int) Math.pow(10,expValue);
 		
 		//instantiate arrayBag variable now that size of var  is known
 		//myArrayBag = new IntArrayBag(Math.pow(10,expValue));
-		myArrayBag = new IntArrayBag(powerOfTen);
+		//myArrayBag = new IntArrayBag(powerOfTen);
 						
-		arrayBagResults[exponentIndex][testIndex] = test_constructor_arrayBag(expValue);
+		arrayBagResults[exponentIndex][testIndex] = test_constructor_arrayBag(powerOfTen);
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_countOccurrences_arrayBag(expValue);
+      //Populates myArrayBag so that we can test the countOccurrences method
+      for ( int i = 0; i < powerOfTen; i++ )
+      {
+         myArrayBag.add(i);
+      }
+      
+		arrayBagResults[exponentIndex][testIndex] = test_countOccurrences_arrayBag(powerOfTen - 1);
 		testIndex++;
 
-		arrayBagResults[exponentIndex][testIndex] = test_getCapacity_arrayBag(expValue);
+		arrayBagResults[exponentIndex][testIndex] = test_getCapacity_arrayBag();
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_remove_arrayBag(expValue);
+		arrayBagResults[exponentIndex][testIndex] = test_remove_arrayBag(powerOfTen - 1);
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_size_arrayBag(expValue);
+		arrayBagResults[exponentIndex][testIndex] = test_size_arrayBag();
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_trimtoSize_arrayBag(expValue);
+		arrayBagResults[exponentIndex][testIndex] = test_trimtoSize_arrayBag();
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_Union_arrayBag(expValue);		
+		arrayBagResults[exponentIndex][testIndex] = test_Union_arrayBag();		
  	}
 	
 //***************************************************************
@@ -143,28 +149,31 @@ public class CompareArrayBagTimes
 		
 		//instantiate linkedBag variable now that size of var  is known
 		//myLinkedBag = new IntLinkedBag(powerOfTen);
-		myLinkedBag = new IntLinkedBag();		//must be instantiated with empty constructor
-		growLinkedBag(powerOfTen);
+				//must be instantiated with empty constructor
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_constructor_linkedBag(expValue);
+		
+		linkedBagResults[exponentIndex][testIndex] =	test_constructor_linkedBag();
+			testIndex++;
+         
+      //Populates myLinkedBag
+      growLinkedBag(powerOfTen);
+      
+		linkedBagResults[exponentIndex][testIndex] =	test_countOccurrences_linkedBag(powerOfTen - 1);
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_countOccurrences_linkedBag(expValue);
+		linkedBagResults[exponentIndex][testIndex] =	test_getCapacity_linkedBag();
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_getCapacity_linkedBag(expValue);
+		linkedBagResults[exponentIndex][testIndex] =	test_remove_linkedBag(powerOfTen - 1);
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_remove_linkedBag(expValue);
+		linkedBagResults[exponentIndex][testIndex] =	test_size_linkedBag();
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_size_linkedBag(expValue);
-			testIndex++;
-		
-		linkedBagResults[exponentIndex][testIndex] =	test_trimtoSize_linkedBag(expValue);
+		linkedBagResults[exponentIndex][testIndex] =	test_trimtoSize_linkedBag();
 			testIndex++;
 			
-		linkedBagResults[exponentIndex][testIndex] =	test_Union_linkedBag(expValue);
+		linkedBagResults[exponentIndex][testIndex] =	test_Union_linkedBag();
 	}
 	
 	//Fill Bags with Data
@@ -183,75 +192,146 @@ public class CompareArrayBagTimes
 //ArrayBag Test Methods, all methods return longs that represent time passed for storage in result arrays
 //***************************************************************
 
-	static long test_constructor_arrayBag(int expValue)
+	static long test_constructor_arrayBag(int powOfTen)
 	{
-		return 11;
+		
+      long start_time = System.currentTimeMillis();
+      myArrayBag = new IntArrayBag(powOfTen);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+      
+      return execution_time;
 	}
 	
-	static long test_countOccurrences_arrayBag(int expValue)
+	static long test_countOccurrences_arrayBag(int lastItem)
 	{
-		return 12;
+
+      long start_time = System.currentTimeMillis();
+      myArrayBag.countOccurrences(lastItem);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+      
+		return execution_time;
 	}
-	static long test_getCapacity_arrayBag(int expValue)
+	static long test_getCapacity_arrayBag()
 	{
-		return 13;
+   
+      long start_time = System.currentTimeMillis();
+      myArrayBag.getCapacity();
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
-	static long test_remove_arrayBag(int expValue)
+	static long test_remove_arrayBag(int lastItem)
 	{
-		return 14;
+      long start_time = System.currentTimeMillis();
+      myArrayBag.remove(lastItem);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 	
-	static long test_size_arrayBag(int expValue)
+	static long test_size_arrayBag()
 	{
-		return 15;
+
+      long start_time = System.currentTimeMillis();
+      myArrayBag.size();
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 	
-	static long test_trimtoSize_arrayBag(int expValue)
+	static long test_trimtoSize_arrayBag()
 	{
-		return 16;
+		long start_time = System.currentTimeMillis();
+      myArrayBag.trimToSize();
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 	
-	static long test_Union_arrayBag(int expValue)
+	static long test_Union_arrayBag()
 	{
-		return 17;
+   
+      IntArrayBag clonedArrayBag;
+      clonedArrayBag = myArrayBag.clone();
+      
+		long start_time = System.currentTimeMillis();
+      IntArrayBag unionArrayBag = IntArrayBag.union(myArrayBag, clonedArrayBag);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 
 //***************************************************************
 //Linked Test Methods, all methods return longs that represent time passed for storage in result arrays
 //***************************************************************	
-	static long test_constructor_linkedBag(int expValue)
+	static long test_constructor_linkedBag()
 	{
-		return 21;
+		long start_time = System.currentTimeMillis();
+      myLinkedBag = new IntLinkedBag();
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+      
+      return execution_time;
 	}
 	
-	static long test_countOccurrences_linkedBag(int expValue)
+	static long test_countOccurrences_linkedBag(int lastItem)
 	{
-		return 22;
+      long start_time = System.currentTimeMillis();
+      myLinkedBag.countOccurrences(lastItem);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+      
+		return execution_time;
 	}
 	
-	static long test_getCapacity_linkedBag(int expValue)
+	static long test_getCapacity_linkedBag()
 	{
-		return 23;
+   	return -1; //IntLinkedBag has no getCapacity method
 	}
 	
-	static long test_remove_linkedBag(int expValue)
+	static long test_remove_linkedBag(int lastItem)
 	{
-		return 24;
+      long start_time = System.currentTimeMillis();
+      myLinkedBag.remove(lastItem);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 	
-	static long test_size_linkedBag(int expValue)
+	static long test_size_linkedBag()
 	{
-		return 25;
+      long start_time = System.currentTimeMillis();
+      myLinkedBag.size();
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 	
-	static long test_trimtoSize_linkedBag(int expValue)
+	static long test_trimtoSize_linkedBag()
 	{
-		return 26;
+		return -1;  //IntLinkedBag has no trimToSize method
 	}
 	
-	static long test_Union_linkedBag(int expValue)
+	static long test_Union_linkedBag()
 	{
-		return 27;
+      IntLinkedBag clonedLinkedBag;
+      clonedLinkedBag = (IntLinkedBag) myLinkedBag.clone();
+      
+		long start_time = System.currentTimeMillis();
+      IntLinkedBag unionLinkedBag = IntLinkedBag.union(myLinkedBag, clonedLinkedBag);
+      long end_time = System.currentTimeMillis();
+      long execution_time = end_time - start_time;
+   
+		return execution_time;
 	}
 	
 	//Helper Method
