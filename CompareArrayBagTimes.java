@@ -9,6 +9,11 @@
 
 import java.util.*;
 
+/**
+ * A class that does time analysis for IntArrayBag and
+ * IntLinkedBag
+ *
+ */
 public class CompareArrayBagTimes 
 {
 	//Using Global Variables to Simplify Calls to Methods from Main Method and Test Driver Methods
@@ -56,6 +61,9 @@ public class CompareArrayBagTimes
 	
 	//***************************************************************
 	
+	/**
+	 * Outputs the results of the time analysis.
+	 */
 	static void outputResults()
 	{
 		
@@ -99,48 +107,49 @@ public class CompareArrayBagTimes
 //ArrayBag Test Driver Method
 //***************************************************************
 
-	//work directly on arrayBag object
+	/**
+	 * Work directly on arrayBag object
+	 * @param exponentIndex
+	 */
 	static void arrayBagTests(int exponentIndex)
 	{
 		int testIndex = 0;
 		int expValue = exponentIndex + EXPONENT_START;
-      int powerOfTen = (int) Math.pow(10,expValue);
+		int powerOfTen = (int) Math.pow(10,expValue);
 		
 		//instantiate arrayBag variable now that size of var  is known
 		//myArrayBag = new IntArrayBag(Math.pow(10,expValue));
-		//myArrayBag = new IntArrayBag(powerOfTen);
+		myArrayBag = new IntArrayBag(powerOfTen);
 						
-		arrayBagResults[exponentIndex][testIndex] = test_constructor_arrayBag(powerOfTen);
+		arrayBagResults[exponentIndex][testIndex] = test_constructor_arrayBag(expValue);
 		testIndex++;
 		
-      //Populates myArrayBag so that we can test the countOccurrences method
-      for ( int i = 0; i < powerOfTen; i++ )
-      {
-         myArrayBag.add(i);
-      }
-      
-		arrayBagResults[exponentIndex][testIndex] = test_countOccurrences_arrayBag(powerOfTen - 1);
+		arrayBagResults[exponentIndex][testIndex] = test_countOccurrences_arrayBag(expValue);
 		testIndex++;
 
-		arrayBagResults[exponentIndex][testIndex] = test_getCapacity_arrayBag();
+		arrayBagResults[exponentIndex][testIndex] = test_getCapacity_arrayBag(expValue);
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_remove_arrayBag(powerOfTen - 1);
+		arrayBagResults[exponentIndex][testIndex] = test_remove_arrayBag(expValue);
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_size_arrayBag();
+		arrayBagResults[exponentIndex][testIndex] = test_size_arrayBag(expValue);
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_trimtoSize_arrayBag();
+		arrayBagResults[exponentIndex][testIndex] = test_trimtoSize_arrayBag(expValue);
 		testIndex++;
 		
-		arrayBagResults[exponentIndex][testIndex] = test_Union_arrayBag();		
+		arrayBagResults[exponentIndex][testIndex] = test_Union_arrayBag(expValue);		
  	}
 	
 //***************************************************************
 //LinkedBag Test Driver Method
 //***************************************************************
 	
+	/**
+	 * 
+	 * @param exponentIndex
+	 */
 	static void linkedBagTests(int exponentIndex)
 	{
 		int testIndex = 0;
@@ -149,37 +158,37 @@ public class CompareArrayBagTimes
 		
 		//instantiate linkedBag variable now that size of var  is known
 		//myLinkedBag = new IntLinkedBag(powerOfTen);
-				//must be instantiated with empty constructor
+		myLinkedBag = new IntLinkedBag();		//must be instantiated with empty constructor
+		growLinkedBag(powerOfTen);
 		
-		
-		linkedBagResults[exponentIndex][testIndex] =	test_constructor_linkedBag();
-			testIndex++;
-         
-      //Populates myLinkedBag
-      growLinkedBag(powerOfTen);
-      
-		linkedBagResults[exponentIndex][testIndex] =	test_countOccurrences_linkedBag(powerOfTen - 1);
+		linkedBagResults[exponentIndex][testIndex] =	test_constructor_linkedBag(expValue);
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_getCapacity_linkedBag();
+		linkedBagResults[exponentIndex][testIndex] =	test_countOccurrences_linkedBag(expValue);
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_remove_linkedBag(powerOfTen - 1);
+		linkedBagResults[exponentIndex][testIndex] =	test_getCapacity_linkedBag(expValue);
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_size_linkedBag();
+		linkedBagResults[exponentIndex][testIndex] =	test_remove_linkedBag(expValue);
 			testIndex++;
 		
-		linkedBagResults[exponentIndex][testIndex] =	test_trimtoSize_linkedBag();
+		linkedBagResults[exponentIndex][testIndex] =	test_size_linkedBag(expValue);
+			testIndex++;
+		
+		linkedBagResults[exponentIndex][testIndex] =	test_trimtoSize_linkedBag(expValue);
 			testIndex++;
 			
-		linkedBagResults[exponentIndex][testIndex] =	test_Union_linkedBag();
+		linkedBagResults[exponentIndex][testIndex] =	test_Union_linkedBag(expValue);
 	}
 	
 	//Fill Bags with Data
 	//==================================================
 	
-	//Need to grow the linked bag to the right size
+	/**
+	 * Need to grow the linked bag to the right size
+	 * @param powerOfTen
+	 */
 	static void growLinkedBag(int powerOfTen)
 	{
 		for (int i = 0; i < powerOfTen; i++)
@@ -192,146 +201,152 @@ public class CompareArrayBagTimes
 //ArrayBag Test Methods, all methods return longs that represent time passed for storage in result arrays
 //***************************************************************
 
-	static long test_constructor_arrayBag(int powOfTen)
+	/**
+	 * Tests the Constructor with time analysis.
+	 * 
+	 * The Constructor has two statements within it:
+	 * It sets data depending on the capacity put in, 
+	 * and sets manyItems to 0. Therefore:
+	 * 
+	 * O(c) = capacity + 1
+	 * 
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_constructor_arrayBag(int expValue)
 	{
-		
-      long start_time = System.currentTimeMillis();
-      myArrayBag = new IntArrayBag(powOfTen);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-      
-      return execution_time;
+		// Constructor -- O(c) c is the inital capacity.
+		return (long) ((Math.pow(10,expValue)));
 	}
 	
-	static long test_countOccurrences_arrayBag(int lastItem)
+	/**
+	 * Tests IntArrayBag countOccurences's time analysis.
+	 * countOccurences has a loop and four statements/declarations within 
+	 * itself. There is one statement within the loop, therefore:
+	 * 
+	 * O(n) = n x (statements) + 4
+	 * 
+	 * Where n is the number of elements in the bag, statements is the
+	 * number of statements in the loop, and 4 is the number of 
+	 * statements/declarations outside the loop.
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_countOccurrences_arrayBag(int expValue)
 	{
-
-      long start_time = System.currentTimeMillis();
-      myArrayBag.countOccurrences(lastItem);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-      
-		return execution_time;
-	}
-	static long test_getCapacity_arrayBag()
-	{
-   
-      long start_time = System.currentTimeMillis();
-      myArrayBag.getCapacity();
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
-	}
-	static long test_remove_arrayBag(int lastItem)
-	{
-      long start_time = System.currentTimeMillis();
-      myArrayBag.remove(lastItem);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		// countOccurences -- O(n) Linear Time
+		int statements = 1;
+		return (long) ((Math.pow(10,expValue) * statements) + 4);
 	}
 	
-	static long test_size_arrayBag()
+	/**
+	 * Tests IntArrayBag getCapcity's time analysis..
+	 * 
+	 * getCapacity has no loops/is not dependant on the elements
+	 * of the bag. The method returns the capacity of the bag as one 
+	 * operation.
+	 *
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_getCapacity_arrayBag(int expValue)
 	{
-
-      long start_time = System.currentTimeMillis();
-      myArrayBag.size();
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		// getCapacity -- O(1) Constant Time
+		return 1;
 	}
 	
-	static long test_trimtoSize_arrayBag()
+	/**
+	 * Tests IntArrayBag remove's time analysis.
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_remove_arrayBag(int expValue)
 	{
-		long start_time = System.currentTimeMillis();
-      myArrayBag.trimToSize();
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		// remove -- O(n) Linear Time
+		return 14;
 	}
 	
-	static long test_Union_arrayBag()
+	/**
+	 * Tests IntArrayBag size's time analysis.
+	 * 
+	 * size has no loops/is not dependant on the elements
+	 * of the bag. The method returns the size of the bag as one 
+	 * operation.
+	 * 
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_size_arrayBag(int expValue)
 	{
-   
-      IntArrayBag clonedArrayBag;
-      clonedArrayBag = myArrayBag.clone();
-      
-		long start_time = System.currentTimeMillis();
-      IntArrayBag unionArrayBag = IntArrayBag.union(myArrayBag, clonedArrayBag);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		// size -- O(1) Constant Time
+		return 1;
+	}
+	
+	/**
+	 * Tests IntArrayBag trimToSize's time analysis.
+	 * 
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_trimtoSize_arrayBag(int expValue)
+	{
+		// trimToSize -- O(n) Linear Time
+		return 16;
+	}
+	
+	/**
+	 * Tests IntArrayBag Union's time analysis.
+	 * Union combines two bags, it adds the capacity of bag one
+	 * with bag two, and therefore:
+	 * 
+	 * O(c1 + c2) = capacity1 + capcity2 + 2
+	 * 
+	 * There are two statements outside of the capacity.
+	 * @param expValue - current exponential value.
+	 * @return Time Analysis result as a long.
+	 */
+	static long test_Union_arrayBag(int expValue)
+	{
+		// Union -- O(c1 + c2) c1 and c2 are the bags' capacities.
+		return (long) (Math.pow(10,expValue) + Math.pow(10,expValue));
 	}
 
 //***************************************************************
 //Linked Test Methods, all methods return longs that represent time passed for storage in result arrays
 //***************************************************************	
-	static long test_constructor_linkedBag()
+	static long test_constructor_linkedBag(int expValue)
 	{
-		long start_time = System.currentTimeMillis();
-      myLinkedBag = new IntLinkedBag();
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-      
-      return execution_time;
+		return 21;
 	}
 	
-	static long test_countOccurrences_linkedBag(int lastItem)
+	static long test_countOccurrences_linkedBag(int expValue)
 	{
-      long start_time = System.currentTimeMillis();
-      myLinkedBag.countOccurrences(lastItem);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-      
-		return execution_time;
+		return 22;
 	}
 	
-	static long test_getCapacity_linkedBag()
+	static long test_getCapacity_linkedBag(int expValue)
 	{
-   	return -1; //IntLinkedBag has no getCapacity method
+		return 23;
 	}
 	
-	static long test_remove_linkedBag(int lastItem)
+	static long test_remove_linkedBag(int expValue)
 	{
-      long start_time = System.currentTimeMillis();
-      myLinkedBag.remove(lastItem);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		return 24;
 	}
 	
-	static long test_size_linkedBag()
+	static long test_size_linkedBag(int expValue)
 	{
-      long start_time = System.currentTimeMillis();
-      myLinkedBag.size();
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		return 25;
 	}
 	
-	static long test_trimtoSize_linkedBag()
+	static long test_trimtoSize_linkedBag(int expValue)
 	{
-		return -1;  //IntLinkedBag has no trimToSize method
+		return 26;
 	}
 	
-	static long test_Union_linkedBag()
+	static long test_Union_linkedBag(int expValue)
 	{
-      IntLinkedBag clonedLinkedBag;
-      clonedLinkedBag = (IntLinkedBag) myLinkedBag.clone();
-      
-		long start_time = System.currentTimeMillis();
-      IntLinkedBag unionLinkedBag = IntLinkedBag.union(myLinkedBag, clonedLinkedBag);
-      long end_time = System.currentTimeMillis();
-      long execution_time = end_time - start_time;
-   
-		return execution_time;
+		return 27;
 	}
 	
 	//Helper Method
